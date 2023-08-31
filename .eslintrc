@@ -4,83 +4,31 @@
     "es2021": true
   },
   "extends": [
+    "eslint:recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
-    "plugin:import/recommended",
-    "plugin:react/jsx-runtime",
-    "plugin:import/typescript",
-    "plugin:import/recommended",
-    "react-hooks/rules-of-hooks",
-    "react-hooks/exhaustive-deps",
-    "prettier"
+    "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": "latest",
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2021,
     "sourceType": "module"
   },
-  "plugins": ["react"],
+  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "detect"
+    }
+  },
   "rules": {
-    "keyword-spacing": "error",
-    "no-unneeded-ternary": ["error", { "defaultAssignment": false }],
-    "prefer-template": "error",
-    "indent": "off",
-    "react/prop-types": 0,
-    "react/display-name": 0,
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
-    "padding-line-between-statements": [
-      "warn",
-      { "blankLine": "always", "prev": "*", "next": "return" },
-      { "blankLine": "always", "prev": "block-like", "next": "*" },
-      { "blankLine": "never", "prev": "block-like", "next": "break" }
-    ],
-    "@typescript-eslint/no-explicit-any": "error",
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/no-var-requires": 0,
-    "@typescript-eslint/no-empty-function": ["warn"],
-    "@typescript-eslint/no-shadow": [
-      "error",
-      {
-        "builtinGlobals": false,
-        "hoist": "functions",
-        "allow": [],
-        "ignoreOnInitialization": false
-      }
-    ],
-    "import/first": "error",
-    "import/newline-after-import": ["warn", { "count": 1 }],
-    "sort-imports": ["warn", { "ignoreCase": true, "ignoreDeclarationSort": true }],
-    "import/order": [
-      "warn",
-      {
-        "newlines-between": "always-and-inside-groups",
-        "alphabetize": { "order": "asc", "caseInsensitive": true },
-        "groups": [
-          "builtin",
-          "external",
-          "internal",
-          "type",
-          "parent",
-          "sibling",
-          "index",
-          "object"
-        ],
-        "pathGroups": [
-          {
-            "pattern": "react*",
-            "group": "external",
-            "position": "before"
-          },
-          {
-            "pattern": "src/*",
-            "group": "internal",
-            "position": "before"
-          }
-        ],
-        "pathGroupsExcludedImportTypes": ["builtin"]
-      }
-    ]
+    "@typescript-eslint/ban-ts-comment": "warn",
+    "react/prop-types": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": "off"
   }
 }

@@ -1,0 +1,1 @@
+export { CalculatePricePageContent } from './CalculatePageContent';
