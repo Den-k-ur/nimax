@@ -25,6 +25,11 @@ h6 {
   margin: 0;
 }
 
+button {
+  border: 0;
+  cursor: pointer;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -32,4 +37,10 @@ h6 {
 
 &::-webkit-scrollbar {
   width: 3px;
+}
+
+.App {
+  background-color: #f9fafb;
+  max-height: 100%;
+  height: 100vh;
 }
