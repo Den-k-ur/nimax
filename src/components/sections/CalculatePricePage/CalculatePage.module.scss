@@ -1,6 +1,25 @@
 .radioFormContainer {
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  flex: 1;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 37px;
+  padding: 10px 0;
+}
+
+.radioButtons {
+  display: flex;
+  gap: 6px;
+}
+
+.textStyles {
+  flex: 1;
+}
+
+.inputsStyles {
   flex: 1;
 }
