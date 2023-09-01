@@ -1,17 +1,11 @@
-import React, {
-  Dispatch,
-  FC,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { Dispatch, FC, SetStateAction, useEffect, useMemo, useState } from 'react';
 
 import styles from './MainPage.module.scss';
 import { CalculatePricePageContent } from 'src/components/sections/CalculatePricePage';
 import { FormsDataDTO } from 'src/models/formsData.dto';
 import { Button } from 'src/components/base/Button';
+import { CustomerData } from 'src/components/sections/CustomerData';
+import { BackButton } from 'src/components/base/Button/BackButton';
 
 export type formProps = {
   formData: FormsDataDTO;
@@ -31,7 +25,7 @@ export const MainPage: FC = () => {
     secondName: '',
     name: '',
     surname: '',
-    phoneNumber: '',
+    phoneNumber: '+7',
     dateOfBirthday: '',
   });
 
@@ -72,6 +66,8 @@ export const MainPage: FC = () => {
     switch (page) {
       case 0:
         return <CalculatePricePageContent formData={formsData} setFormData={setFormsData} />;
+      case 1:
+        return <CustomerData formData={formsData} setFormData={setFormsData} />;
     }
   }, [page, formsData]);
 
@@ -83,9 +79,16 @@ export const MainPage: FC = () => {
         <h1>Бронирование номера</h1>
         <p>{FormTitles[page]}</p>
         <div>{displayPage}</div>
-        <div className={styles.buttonContainer}>
-          <Button title="Далее" onClick={() => setPage(page + 1)} />
-        </div>
+        {page > 0 ? (
+          <div className={styles.buttonsContainer}>
+            <BackButton title="Назад к расчету стоимости" onClick={() => setPage(page - 1)} />
+            <Button title="Далее" onClick={() => setPage(page + 1)} />
+          </div>
+        ) : (
+          <div className={styles.buttonContainer}>
+            <Button title="Далее" onClick={() => setPage(page + 1)} />
+          </div>
+        )}
       </div>
     </div>
   );

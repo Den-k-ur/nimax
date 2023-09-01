@@ -12,6 +12,8 @@ type InputProps = {
   checked?: boolean;
   name?: string;
   id?: string;
+  require?: boolean;
+  pattern?: string;
 };
 
 export const Input: FC<InputProps> = ({
@@ -20,7 +22,9 @@ export const Input: FC<InputProps> = ({
   onChange,
   min,
   max,
+  pattern,
   value,
+  require,
   id,
   name,
   checked,
@@ -28,8 +32,9 @@ export const Input: FC<InputProps> = ({
   return type === 'number' ? (
     <input
       type="number"
-      className={styles.Input}
+      className={styles.input}
       onChange={onChange}
+      required={require}
       min={min}
       max={max}
       value={value}
@@ -38,10 +43,13 @@ export const Input: FC<InputProps> = ({
     <input
       type={type}
       placeholder={placeholder}
-      className={styles.Input}
+      className={styles.input}
       onChange={onChange}
+      required={require}
       id={id}
+      value={value}
       checked={checked}
+      pattern={pattern}
       name={name}
     />
   );
