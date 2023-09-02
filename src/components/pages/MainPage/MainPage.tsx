@@ -1,11 +1,21 @@
-import React, { Dispatch, FC, SetStateAction, useEffect, useMemo, useState } from 'react';
+import React, {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 import styles from './MainPage.module.scss';
 import { CalculatePricePageContent } from 'src/components/sections/CalculatePricePage';
-import { FormsDataDTO } from 'src/models/formsData.dto';
+import { ConfirmationOrderDataDTO, FormsDataDTO } from 'src/models/formsData.dto';
 import { Button } from 'src/components/base/Button';
 import { CustomerData } from 'src/components/sections/CustomerData';
 import { BackButton } from 'src/components/base/Button/BackButton';
+import { ConfirmationOrder } from 'src/components/sections/ConfirmationOrder';
+import { error } from 'console';
 
 export type formProps = {
   formData: FormsDataDTO;
@@ -18,6 +28,7 @@ export const MainPage: FC = () => {
     numberOfSchoolKids: 0,
     numberOfKids: 0,
     roomType: 'econom',
+    roomTypeLabel: 'Эконом',
     numberOfNights: 1,
     roomPrice: 1800,
     insurance: false,
@@ -28,6 +39,22 @@ export const MainPage: FC = () => {
     phoneNumber: '+7',
     dateOfBirthday: '',
   });
+  const [isSending, setIsSending] = useState(false);
+  const [serverResponse, setServerResponse] = useState<{ message: string } | null>(null);
+
+  const confirmationOrderData = {
+    numberOfAdults: formsData.numberOfAdults,
+    numberOfSchoolKids: formsData.numberOfSchoolKids,
+    numberOfKids: formsData.numberOfKids,
+    numberOfNights: formsData.numberOfNights,
+    roomType: formsData.roomTypeLabel,
+    insurance: formsData.insurance,
+    totalPrice: formsData.totalPrice,
+    secondName: formsData.secondName,
+    name: formsData.name,
+    surname: formsData.surname,
+    phoneNumber: formsData.phoneNumber,
+  };
 
   const calucateTotalPrice = useMemo(() => {
     if (formsData.numberOfSchoolKids !== 0)
@@ -46,6 +73,15 @@ export const MainPage: FC = () => {
     formsData.numberOfNights,
     formsData.insurance,
   ]);
+
+  const simulateServerRequest = useCallback((data: ConfirmationOrderDataDTO) => {
+    return new Promise<{ message: string }>((resolve) => {
+      setTimeout(() => {
+        const response = { message: 'Заказ успешно оплачен' };
+        resolve(response);
+      }, 2000);
+    });
+  }, []);
 
   useEffect(() => {
     setFormsData({
@@ -68,6 +104,8 @@ export const MainPage: FC = () => {
         return <CalculatePricePageContent formData={formsData} setFormData={setFormsData} />;
       case 1:
         return <CustomerData formData={formsData} setFormData={setFormsData} />;
+      case 2:
+        return <ConfirmationOrder confirmationOrder={confirmationOrderData} />;
     }
   }, [page, formsData]);
 
@@ -75,21 +113,49 @@ export const MainPage: FC = () => {
 
   return (
     <div className={styles.page}>
-      <div className={styles.pageContainer}>
-        <h1>Бронирование номера</h1>
-        <p>{FormTitles[page]}</p>
-        <div>{displayPage}</div>
-        {page > 0 ? (
-          <div className={styles.buttonsContainer}>
-            <BackButton title="Назад к расчету стоимости" onClick={() => setPage(page - 1)} />
-            <Button title="Далее" onClick={() => setPage(page + 1)} />
+      {isSending ? (
+        <span className={styles.paymentProcess}>Проведение оплаты...</span>
+      ) : (
+        <div className={styles.pageContainer}>
+          <div>
+            <h1>Бронирование номера</h1>
+            <p>{FormTitles[page]}</p>
           </div>
-        ) : (
-          <div className={styles.buttonContainer}>
-            <Button title="Далее" onClick={() => setPage(page + 1)} />
-          </div>
-        )}
-      </div>
+          <div className={styles.formContainer}>{displayPage}</div>
+          {page > 0 ? (
+            <div className={styles.buttonsContainer}>
+              <BackButton
+                title={page === 1 ? 'Назад к расчету стоимости' : 'Назад к данным покупателя'}
+                onClick={() => setPage(page - 1)}
+              />
+              <Button
+                title={page === 1 ? 'далее' : 'Оплатить'}
+                onClick={
+                  page === 1
+                    ? () => setPage(page + 1)
+                    : () => {
+                        setIsSending(true);
+                        simulateServerRequest(confirmationOrderData)
+                          .then((response) => {
+                            setServerResponse(response);
+                          })
+                          .catch((error) => {
+                            return error;
+                          })
+                          .finally(() => {
+                            setIsSending(false);
+                          });
+                      }
+                }
+              />
+            </div>
+          ) : (
+            <div className={styles.buttonContainer}>
+              <Button title="Далее" onClick={() => setPage(page + 1)} />
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

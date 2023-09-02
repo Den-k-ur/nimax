@@ -25,3 +25,16 @@
   display: flex;
   justify-content: space-between;
 }
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 37px;
+  padding: 10px 0;
+}
+
+.paymentProcess {
+  justify-content: center;
+  align-self: center;
+  font-size: 32px;
+}
