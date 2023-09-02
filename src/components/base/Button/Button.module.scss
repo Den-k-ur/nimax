@@ -12,6 +12,10 @@
   @media screen and (max-width: 639px) {
     max-width: 100%;
   }
+  &:disabled {
+    cursor: auto;
+    background-color: #bbb;
+  }
 }
 
 .backButton {

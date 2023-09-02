@@ -128,6 +128,8 @@ export const MainPage: FC = () => {
 
   const FormTitles = ['Расчет стоимости', 'Данные покупателя', 'Подтверждение заказа'];
 
+  console.log(formsData.phoneNumber.length);
+
   return (
     <div className={styles.page}>
       {isSending ? (
@@ -156,6 +158,15 @@ export const MainPage: FC = () => {
               />
               <Button
                 title={page === 1 ? 'далее' : 'Оплатить'}
+                disabled={
+                  !(
+                    formsData.name !== '' &&
+                    formsData.secondName !== '' &&
+                    formsData.phoneNumber.length === 16 &&
+                    formsData.dateOfBirthday !== '' &&
+                    page === 1
+                  )
+                }
                 onClick={
                   page === 1
                     ? () => setPage(page + 1)
