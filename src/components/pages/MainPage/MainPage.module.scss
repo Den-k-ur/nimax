@@ -18,12 +18,22 @@
   max-width: 128px;
   width: 100%;
   align-self: flex-end;
+  @media screen and (max-width: 639px) {
+    max-width: 100%;
+
+    align-self: unset;
+  }
 }
 
 .buttonsContainer {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  @media screen and (max-width: 639px) {
+    flex-direction: column;
+    gap: 10px;
+    justify-content: unset;
+  }
 }
 
 .formContainer {

@@ -5,6 +5,7 @@ import styles from './CalculatePage.module.scss';
 import { formProps } from 'src/components/pages/MainPage/MainPage';
 import { Input } from 'src/components/base/Input';
 import { FORM_FIELDS, ROOM_TYPES } from './constants';
+import { Switcher } from 'src/components/base/Switcher';
 
 export const CalculatePricePageContent: FC<formProps> = ({ formData, setFormData }) => {
   const handleInputChange = (fieldName: string, value: string) => {
@@ -49,37 +50,70 @@ export const CalculatePricePageContent: FC<formProps> = ({ formData, setFormData
             )}
             {field.type === 'radio' && (
               <div className={styles.radioFormContainer}>
-                {Object.keys(ROOM_TYPES).map((type) => (
-                  <div key={type} className={styles.radioButtons}>
-                    <input
-                      type="radio"
-                      id={type}
-                      name="roomType"
-                      value={type}
-                      checked={formData.roomType === type}
-                      onChange={() => {
-                        handleRadioChange(
-                          field.fieldName,
-                          type,
-                          ROOM_TYPES[type].roomPrice,
-                          field.label,
-                        );
-                      }}
-                    />
-                    <label htmlFor={type}>{ROOM_TYPES[type].label}</label>
-                  </div>
-                ))}
+                <div className={styles.selectDisplay}>
+                  <select
+                    name="roomType"
+                    id="roomType"
+                    value={formData.roomType}
+                    className={styles.selectStyles}
+                    onChange={(e) => {
+                      handleRadioChange(
+                        field.fieldName,
+                        e.target.value,
+                        ROOM_TYPES[e.target.value].roomPrice,
+                        field.label,
+                      );
+                    }}
+                  >
+                    {Object.keys(ROOM_TYPES).map((type) => (
+                      <option value={type} key={type}>
+                        {ROOM_TYPES[type].label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className={styles.displayAdaptive}>
+                  {Object.keys(ROOM_TYPES).map((type) => (
+                    <div key={type} className={styles.radioButtons}>
+                      <input
+                        type="radio"
+                        id={type}
+                        name="roomType"
+                        value={type}
+                        checked={formData.roomType === type}
+                        onChange={() => {
+                          handleRadioChange(
+                            field.fieldName,
+                            type,
+                            ROOM_TYPES[type].roomPrice,
+                            field.label,
+                          );
+                        }}
+                      />
+                      <label htmlFor={type}>{ROOM_TYPES[type].label}</label>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
             {field.type === 'checkbox' && (
               <div className={styles.inputsStyles}>
-                <input
-                  type="checkbox"
+                <Switcher
+                  label={field.label}
                   checked={formData[field.fieldName] as boolean}
                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
                     handleCheckboxChange(field.fieldName, e.target.checked);
                   }}
                 />
+                <div className={styles.displayAdaptive}>
+                  <input
+                    type="checkbox"
+                    checked={formData[field.fieldName] as boolean}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      handleCheckboxChange(field.fieldName, e.target.checked);
+                    }}
+                  />
+                </div>
               </div>
             )}
           </>
