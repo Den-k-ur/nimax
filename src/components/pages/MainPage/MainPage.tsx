@@ -128,8 +128,6 @@ export const MainPage: FC = () => {
 
   const FormTitles = ['Расчет стоимости', 'Данные покупателя', 'Подтверждение заказа'];
 
-  console.log(formsData.phoneNumber.length);
-
   return (
     <div className={styles.page}>
       {isSending ? (
