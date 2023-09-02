@@ -6,7 +6,7 @@ import styles from './Input.module.scss';
 type PhoneNumberInputProps = {
   mask: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  value?: string;
+  value: string;
   placeholder?: string;
 };
 
@@ -16,6 +16,7 @@ export const PhoneNumberInput: FC<PhoneNumberInputProps> = ({
   value,
   placeholder,
 }) => {
+  console.log(value);
   return (
     <ReactInputMask
       className={styles.input}

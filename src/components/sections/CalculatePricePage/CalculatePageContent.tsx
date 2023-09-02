@@ -15,8 +15,13 @@ export const CalculatePricePageContent: FC<formProps> = ({ formData, setFormData
     }
   };
 
-  const handleRadioChange = (fieldName: string, value: string, roomPrice: number) => {
-    setFormData({ ...formData, [fieldName]: value, roomPrice });
+  const handleRadioChange = (
+    fieldName: string,
+    value: string,
+    roomPrice: number,
+    label: string,
+  ) => {
+    setFormData({ ...formData, [fieldName]: value, roomPrice, roomTypeLabel: label });
   };
 
   const handleCheckboxChange = (fieldName: string, checked: boolean) => {
@@ -24,7 +29,7 @@ export const CalculatePricePageContent: FC<formProps> = ({ formData, setFormData
   };
 
   return (
-    <div className={styles.formContainer}>
+    <>
       {FORM_FIELDS.map((field) => (
         <FormWrapper key={field.fieldName}>
           <span className={styles.textStyles}>{field.label}</span>
@@ -53,7 +58,12 @@ export const CalculatePricePageContent: FC<formProps> = ({ formData, setFormData
                       value={type}
                       checked={formData.roomType === type}
                       onChange={() => {
-                        handleRadioChange(field.fieldName, type, ROOM_TYPES[type].roomPrice);
+                        handleRadioChange(
+                          field.fieldName,
+                          type,
+                          ROOM_TYPES[type].roomPrice,
+                          field.label,
+                        );
                       }}
                     />
                     <label htmlFor={type}>{ROOM_TYPES[type].label}</label>
@@ -79,6 +89,6 @@ export const CalculatePricePageContent: FC<formProps> = ({ formData, setFormData
         <span className={styles.textStyles}>Итого:</span>
         <span className={styles.textStyles}>{formData.totalPrice} &#8381;</span>
       </FormWrapper>
-    </div>
+    </>
   );
 };
