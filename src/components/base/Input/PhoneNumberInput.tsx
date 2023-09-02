@@ -8,6 +8,7 @@ type PhoneNumberInputProps = {
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   value: string;
   placeholder?: string;
+  require?: boolean;
 };
 
 export const PhoneNumberInput: FC<PhoneNumberInputProps> = ({
@@ -15,13 +16,14 @@ export const PhoneNumberInput: FC<PhoneNumberInputProps> = ({
   onChange,
   value,
   placeholder,
+  require,
 }) => {
-  console.log(value);
   return (
     <ReactInputMask
       className={styles.input}
       mask={mask}
       onChange={onChange}
+      required={require}
       value={value}
       placeholder={placeholder}
     />
