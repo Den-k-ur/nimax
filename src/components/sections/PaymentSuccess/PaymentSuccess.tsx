@@ -12,10 +12,17 @@ type PaymentSuccessProps = {
 
 export const PaymentSuccess: FC<PaymentSuccessProps> = ({ title, onClick }) => {
   return (
-    <div className={styles.successBlock}>
-      <SuccessIcon />
-      <p>{title}</p>
-      <Button title="Забронировать еще" onClick={onClick} />
+    <div className={styles.successContainer}>
+      <div className={styles.successBlock}>
+        <SuccessIcon />
+        <p>{title}</p>
+        <div className={styles.buttonDisplay}>
+          <Button title="Забронировать еще" onClick={onClick} />
+        </div>
+      </div>
+      <div className={styles.adaptiveButtonDisplay}>
+        <Button title="Забронировать еще" onClick={onClick} />
+      </div>
     </div>
   );
 };

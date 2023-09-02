@@ -9,6 +9,9 @@
   font-weight: 500;
   border: 1px solid;
   cursor: pointer;
+  @media screen and (max-width: 639px) {
+    max-width: 100%;
+  }
 }
 
 .backButton {
@@ -17,4 +20,8 @@
   padding: 10px 14px;
   border-radius: 4px;
   background-color: #fff;
+  @media screen and (max-width: 639px) {
+    max-width: 100%;
+    order: 2;
+  }
 }
