@@ -16,6 +16,7 @@ import { CustomerData } from 'src/components/sections/CustomerData';
 import { BackButton } from 'src/components/base/Button/BackButton';
 import { ConfirmationOrder } from 'src/components/sections/ConfirmationOrder';
 import { error } from 'console';
+import { PaymentSuccess } from 'src/components/sections/PaymentSuccess';
 
 export type formProps = {
   formData: FormsDataDTO;
@@ -39,6 +40,22 @@ export const MainPage: FC = () => {
     phoneNumber: '+7',
     dateOfBirthday: '',
   });
+  const initialFormsData = {
+    numberOfAdults: 1,
+    numberOfSchoolKids: 0,
+    numberOfKids: 0,
+    roomType: 'econom',
+    roomTypeLabel: 'Эконом',
+    numberOfNights: 1,
+    roomPrice: 1800,
+    insurance: false,
+    totalPrice: 1800,
+    secondName: '',
+    name: '',
+    surname: '',
+    phoneNumber: '+7',
+    dateOfBirthday: '',
+  };
   const [isSending, setIsSending] = useState(false);
   const [serverResponse, setServerResponse] = useState<{ message: string } | null>(null);
 
@@ -115,6 +132,15 @@ export const MainPage: FC = () => {
     <div className={styles.page}>
       {isSending ? (
         <span className={styles.paymentProcess}>Проведение оплаты...</span>
+      ) : serverResponse ? (
+        <PaymentSuccess
+          title={serverResponse.message}
+          onClick={() => {
+            setFormsData(initialFormsData);
+            setServerResponse(null);
+            setPage(0);
+          }}
+        />
       ) : (
         <div className={styles.pageContainer}>
           <div>
